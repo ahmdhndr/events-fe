@@ -1,6 +1,4 @@
 import axios from "axios";
-import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
 
 import { env } from "@/lib/env/client";
 
@@ -8,11 +6,7 @@ const headers = {
   "Content-Type": "application/json",
 };
 
-interface CustomSession extends Session {
-  accessToken?: string;
-}
-
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: env.NEXT_PUBLIC_API_URL,
   headers,
   timeout: 60 * 1000,
@@ -20,10 +14,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (request) => {
-    const session: CustomSession | null = await getSession();
+    const token = localStorage.getItem("accessToken");
 
-    if (session && session.accessToken) {
-      request.headers.Authorization = `Bearer ${session.accessToken}`;
+    if (token) {
+      request.headers.Authorization = `Bearer ${token}`;
     }
     return request;
   },

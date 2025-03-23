@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 
+import { Toaster } from "@/components/ui/sonner";
+
 import "./globals.css";
+import QueryProviders from "./query-provider";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -31,9 +34,12 @@ export default function RootLayout({
       <body
         className={`${jakartaSans.variable} ${geistMono.variable} h-full w-full antialiased`}
       >
-        <div className="flex h-screen w-screen flex-col justify-between">
-          <main className="container flex-grow">{children}</main>
-        </div>
+        <QueryProviders>
+          <div className="flex h-screen w-screen flex-col justify-between overflow-x-hidden">
+            <main className="container flex-grow">{children}</main>
+          </div>
+        </QueryProviders>
+        <Toaster />
       </body>
     </html>
   );

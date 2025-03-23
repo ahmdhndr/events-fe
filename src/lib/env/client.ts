@@ -5,7 +5,7 @@ import { z } from "zod";
 export const env = createEnv({
   client: {
     NEXT_PUBLIC_BASE_URL: z.string(),
-    NEXT_PUBLIC_API_URL: z.string(),
+    NEXT_PUBLIC_API_URL: z.string().url(),
   }, // Specify env variables schema here. Usually start with `NEXT_PUBLIC` to expose to the client.
   /**
    * Makes it so that empty strings are treated as undefined.

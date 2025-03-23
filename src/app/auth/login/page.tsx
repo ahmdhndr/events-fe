@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Halaman Login",
+  title: "Login Page",
 };
 
 export default function LoginPage() {
