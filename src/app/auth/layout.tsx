@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Auth",
-    default: "Halaman Register",
+    template: "%s | Acara",
+    default: "Register Page",
   },
 };
 
@@ -15,7 +15,7 @@ export default function AuthLayout({
   return (
     <>
       <section className="mx-auto max-w-screen-xl px-6 lg:p-6">
-        {children}
+        <div className="relative">{children}</div>
       </section>
     </>
   );

@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,50 +23,34 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import useRegister from "../(hooks)/use-register";
-
-const formSchema = z.object({
-  fullName: z.string(),
-  username: z.string(),
-  email: z.string().email("Must be a valid email"),
-  password: z.string(),
-  passwordConfirmation: z.string(),
-});
+import useRegister from "../_hooks/use-register";
 
 export function RegisterForm() {
-  const { visiblePassword, handleVisiblePassword } = useRegister();
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: "",
-      username: "",
-      email: "",
-      password: "",
-      passwordConfirmation: "",
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const {
+    visiblePassword,
+    handleVisiblePassword,
+    form,
+    isPendingRegister,
+    onSubmit,
+  } = useRegister();
 
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-xl">
       <CardHeader>
         <CardTitle className="text-primary">Create Account</CardTitle>
         <CardDescription>
           Have an account?&nbsp;
-          <Link href={"/login"} className="font-semibold text-rose-500">
+          <Link href={"/auth/login"} className="font-semibold text-rose-500">
             Login here
           </Link>
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={`${Object.keys(form.formState.errors).length > 0 ? "space-y-1" : "space-y-4"}`}
+          >
             <FormField
               control={form.control}
               name="fullName"
@@ -145,16 +126,14 @@ export function RegisterForm() {
             />
             <FormField
               control={form.control}
-              name="passwordConfirmation"
+              name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password Confirmation</FormLabel>
                   <FormControl>
                     <Input
                       type={
-                        visiblePassword.passwordConfirmation
-                          ? "text"
-                          : "password"
+                        visiblePassword.confirmPassword ? "text" : "password"
                       }
                       placeholder="Confirm password"
                       endContent={
@@ -162,10 +141,10 @@ export function RegisterForm() {
                           className="focus:outline-none"
                           type="button"
                           onClick={() =>
-                            handleVisiblePassword("passwordConfirmation")
+                            handleVisiblePassword("confirmPassword")
                           }
                         >
-                          {visiblePassword.passwordConfirmation ? (
+                          {visiblePassword.confirmPassword ? (
                             <EyeOffIcon />
                           ) : (
                             <EyeIcon />
@@ -179,8 +158,17 @@ export function RegisterForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" variant={"default"} className="w-full">
-              Register
+            <Button
+              type="submit"
+              variant={"default"}
+              className="w-full"
+              disabled={isPendingRegister}
+            >
+              {isPendingRegister ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Register"
+              )}
             </Button>
           </form>
         </Form>
