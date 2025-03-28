@@ -22,10 +22,11 @@ async function getActivationCode(code: string) {
   }
 }
 
+type Params = Promise<{ code: string }>;
 export default async function ActivationPage({
   searchParams,
 }: {
-  searchParams: { code?: string };
+  searchParams: Params;
 }) {
   const { code } = await searchParams;
 
