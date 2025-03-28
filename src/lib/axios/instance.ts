@@ -14,11 +14,11 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   async (request) => {
-    const token = localStorage.getItem("accessToken");
+    // const token = localStorage.getItem("accessToken");
 
-    if (token) {
-      request.headers.Authorization = `Bearer ${token}`;
-    }
+    // if (token) {
+    //   request.headers.Authorization = `Bearer ${token}`;
+    // }
     return request;
   },
   (error) => Promise.reject(error)
