@@ -9,7 +9,7 @@ import { z } from "zod";
 
 import { showCustomToast } from "@/components/custom-toast";
 import { authServices } from "@/services/auth/auth-services";
-import { IRegister } from "@/utils/types/auth";
+import type { IRegister } from "@/utils/types/auth";
 
 const registerSchema = z
   .object({
