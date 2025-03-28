@@ -1,10 +1,15 @@
+import { Metadata } from "next";
 import Image from "next/image";
 
 import { RegisterForm } from "../_components/register-form";
 
+export const metadata: Metadata = {
+  title: "Register",
+};
+
 export default function RegisterPage() {
   return (
-    <div className="absolute left-1/2 top-1/2 mt-6 flex w-full -translate-x-1/2 items-center justify-center gap-20 lg:mt-0">
+    <div className="flex h-full w-full items-center justify-center gap-20">
       <div className="hidden lg:flex lg:w-full lg:flex-col lg:items-center lg:justify-center lg:gap-10">
         <Image
           src={"/images/general/logo.svg"}
