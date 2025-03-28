@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Acara",
+    template: "Acara | %s",
     default: "Home",
   },
   description: "Acara | Event Management System",
@@ -31,6 +31,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link
+        rel="icon"
+        href="/images/general/logo.svg"
+        type="image/x-icon"
+        // sizes="32x32"
+      />
       <body
         className={`${jakartaSans.variable} ${geistMono.variable} h-full w-full antialiased`}
       >
