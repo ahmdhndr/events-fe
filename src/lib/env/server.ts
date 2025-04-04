@@ -6,6 +6,8 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    NEXTAUTH_SECRET: z.string(),
+    NEXTAUTH_URL: z.string().url(),
   },
   /**
    * Makes it so that empty strings are treated as undefined.
