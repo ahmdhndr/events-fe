@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { Suspense } from "react";
 
 import { LoginForm } from "../_components/login-form";
 
@@ -28,7 +29,9 @@ export default function LoginPage() {
           className="h-full object-cover object-center"
         />
       </div>
-      <LoginForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <LoginForm />
+      </Suspense>
     </div>
   );
 }
