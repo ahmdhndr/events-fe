@@ -1,6 +1,8 @@
 import axios from "axios";
+import { getServerSession } from "next-auth";
 
 import { env } from "@/lib/env/client";
+import { SessionExtended } from "@/utils/types/auth";
 
 const headers = {
   "Content-Type": "application/json",
@@ -14,11 +16,11 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   async (request) => {
-    // const token = localStorage.getItem("accessToken");
+    const session: SessionExtended | null = await getServerSession();
 
-    // if (token) {
-    //   request.headers.Authorization = `Bearer ${token}`;
-    // }
+    if (session && session.accessToken) {
+      request.headers.Authorization = `Bearer ${session.accessToken}`;
+    }
     return request;
   },
   (error) => Promise.reject(error)

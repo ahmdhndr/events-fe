@@ -40,7 +40,7 @@ export function RegisterForm() {
         <CardTitle className="text-primary">Create Account</CardTitle>
         <CardDescription>
           Have an account?&nbsp;
-          <Link href={"/auth/login"} className="font-semibold text-rose-500">
+          <Link href={"/auth/login"} className="font-semibold text-primary">
             Login here
           </Link>
         </CardDescription>

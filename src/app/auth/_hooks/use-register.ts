@@ -3,11 +3,10 @@ import { useState } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { showCustomToast } from "@/components/custom-toast";
+import { errorToast } from "@/lib/error-toast";
 import { authServices } from "@/services/auth/auth-services";
 import type { IRegister } from "@/utils/types/auth";
 
@@ -74,28 +73,12 @@ const useRegister = () => {
 
   const { mutate: registerMutate, isPending: isPendingRegister } = useMutation({
     mutationFn: registerFn,
-    onError: (error: AxiosError) => {
-      showCustomToast({
-        type: "error",
-        title:
-          (
-            error.response?.data as {
-              status?: string;
-            }
-          )?.status || "Failed",
-        description: (
-          error.response?.data as {
-            message?: string;
-          }
-        )?.message,
-      });
-      // toast.error("Error fetching data!", {
-      //   description: (error.response?.data as { message?: string; })?.message,
-      // });
+    onError: (error) => {
+      errorToast(error);
     },
     onSuccess: () => {
-      form.reset();
       router.push("/auth/register/success");
+      form.reset();
     },
   });
 
