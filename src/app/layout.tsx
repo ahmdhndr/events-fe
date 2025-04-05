@@ -42,7 +42,7 @@ export default function RootLayout({
       >
         <QueryProviders>
           <div className="flex h-screen w-screen flex-col justify-between overflow-x-hidden">
-            <main className="container flex-grow">{children}</main>
+            <main className="flex-grow">{children}</main>
           </div>
         </QueryProviders>
         <Toaster />
