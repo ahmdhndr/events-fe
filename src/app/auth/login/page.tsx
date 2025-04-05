@@ -1,6 +1,11 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
+
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth";
 
 import { LoginForm } from "../_components/login-form";
 
@@ -8,7 +13,13 @@ export const metadata: Metadata = {
   title: "Login",
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user) {
+    redirect("/");
+  }
+
   return (
     <div className="flex h-full w-full items-center justify-center gap-20">
       <div className="hidden lg:flex lg:w-full lg:flex-col lg:items-center lg:justify-center lg:gap-10">

@@ -1,5 +1,10 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/lib/auth";
 
 import { RegisterForm } from "../_components/register-form";
 
@@ -7,7 +12,13 @@ export const metadata: Metadata = {
   title: "Register",
 };
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const session = await getServerSession(authOptions);
+
+  if (session?.user) {
+    redirect("/");
+  }
+
   return (
     <div className="flex h-full w-full items-center justify-center gap-20">
       <div className="hidden lg:flex lg:w-full lg:flex-col lg:items-center lg:justify-center lg:gap-10">

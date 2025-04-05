@@ -36,7 +36,8 @@ const useLogin = () => {
 
   const toggleVisibilityPassword = () => setIsVisible(!isVisible);
 
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const url = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = decodeURIComponent(url);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -65,7 +66,7 @@ const useLogin = () => {
       errorToast(error);
     },
     onSuccess: () => {
-      router.push("/");
+      router.push(callbackUrl);
       form.reset();
     },
   });
