@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 import QueryProviders from "./query-provider";
 
-const jakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const interSans = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  // weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -31,15 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link
-        rel="icon"
-        href="/images/general/logo.svg"
-        type="image/x-icon"
-        // sizes="32x32"
-      />
-      <body
-        className={`${jakartaSans.variable} ${geistMono.variable} h-full w-full antialiased`}
-      >
+      <link rel="icon" href="/images/general/logo.svg" type="image/x-icon" />
+      <body className={`${interSans.variable} h-full w-full antialiased`}>
         <QueryProviders>
           <div className="flex h-screen w-screen flex-col justify-between overflow-x-hidden">
             <main className="flex-grow">{children}</main>

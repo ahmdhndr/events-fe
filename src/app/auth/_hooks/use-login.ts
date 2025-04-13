@@ -48,7 +48,6 @@ const useLogin = () => {
   });
 
   const loginFn = async (payload: ILogin) => {
-    // const result = await authServices.login(payload);
     const result = await signIn("credentials", {
       ...payload,
       redirect: false,
