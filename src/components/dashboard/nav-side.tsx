@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { IconType } from "react-icons/lib";
 
 import {
@@ -21,6 +24,8 @@ interface PropTypes {
 }
 
 export default function NavSide({ items, groupTitle }: PropTypes) {
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>{groupTitle}</SidebarGroupLabel>
@@ -28,9 +33,16 @@ export default function NavSide({ items, groupTitle }: PropTypes) {
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon size={50} />}
-                <span>{item.title}</span>
+              <SidebarMenuButton
+                className="text-sm font-normal hover:bg-primary hover:text-white data-[active=true]:bg-primary data-[active=true]:text-white"
+                tooltip={item.title}
+                asChild
+                isActive={pathname === item.url}
+              >
+                <Link href={item.url}>
+                  {item.icon && <item.icon size={50} />}
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
