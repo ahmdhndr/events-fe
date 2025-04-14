@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import * as React from "react";
 
 import {
@@ -89,7 +90,7 @@ export function AppSidebar({ type, user, ...props }: AppSidebarProp) {
               asChild
               className="h-fit data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#" className="flex items-center justify-center">
+              <Link href="/" className="flex items-center justify-center">
                 <Image
                   src={"/images/general/logo.svg"}
                   alt="Logo"
@@ -98,7 +99,7 @@ export function AppSidebar({ type, user, ...props }: AppSidebarProp) {
                   quality={70}
                   className="h-full object-cover object-center"
                 />
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

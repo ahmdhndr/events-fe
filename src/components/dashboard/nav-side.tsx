@@ -12,6 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 interface PropTypes {
@@ -25,6 +26,7 @@ interface PropTypes {
 
 export default function NavSide({ items, groupTitle }: PropTypes) {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   return (
     <SidebarGroup>
@@ -39,7 +41,7 @@ export default function NavSide({ items, groupTitle }: PropTypes) {
                 asChild
                 isActive={pathname === item.url}
               >
-                <Link href={item.url}>
+                <Link href={item.url} onClick={() => setOpenMobile(false)}>
                   {item.icon && <item.icon size={50} />}
                   <span>{item.title}</span>
                 </Link>
