@@ -1,35 +1,32 @@
 import { AxiosError } from "axios";
+import { toast } from "sonner";
 
-import { showCustomToast } from "@/components/custom-toast";
+import { capitalizeFirstLetter } from "@/utils/capitalize-letter";
+
+type AxiosErrorData = {
+  status?: string;
+  message?: string;
+};
 
 export const errorToast = (error: unknown) => {
+  const getDefaultToast = () =>
+    toast.error(capitalizeFirstLetter("error"), {
+      description: "Something went wrong.",
+    });
+
   if (error instanceof AxiosError) {
-    showCustomToast({
-      type: "error",
-      title:
-        (
-          error.response?.data as {
-            status?: string;
-          }
-        )?.status || "Failed",
-      description:
-        (
-          error.response?.data as {
-            message?: string;
-          }
-        )?.message || error.message,
+    const data = error.response?.data as AxiosErrorData;
+    const status = data?.status ?? "Failed";
+    const message = data?.message ?? error.message;
+
+    toast.error(capitalizeFirstLetter(status), {
+      description: message,
     });
   } else if (error instanceof Error) {
-    showCustomToast({
-      type: "error",
-      title: error.name,
+    toast.error(capitalizeFirstLetter("error"), {
       description: error.message,
     });
   } else {
-    showCustomToast({
-      type: "error",
-      title: "Unknown Error",
-      description: "Something went wrong.",
-    });
+    getDefaultToast();
   }
 };

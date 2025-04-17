@@ -58,7 +58,12 @@ export function RegisterForm() {
                 <FormItem>
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input type="text" placeholder="John Doe" {...field} />
+                    <Input
+                      autoFocus
+                      type="text"
+                      placeholder="John Doe"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
