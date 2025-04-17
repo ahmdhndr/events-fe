@@ -10,6 +10,7 @@ import { MdDelete, MdInfo } from "react-icons/md";
 
 import DataTable from "@/components/datatable";
 import { DataTableColumnHeader } from "@/components/datatable/datatable-column-header";
+import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,8 +18,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useModal } from "@/context/modal-context";
 
 import useCategory from "../_hooks/use-category";
+import AddCategoryDialog from "./add-category-dialog";
 
 export type TCategory = {
   _id: string;
@@ -28,6 +31,7 @@ export type TCategory = {
 };
 
 export default function CategoryTable() {
+  const { open } = useModal();
   const router = useRouter();
   const {
     categoryData,
@@ -116,22 +120,30 @@ export default function CategoryTable() {
   }, [currentPage, currentLimit, setURL]);
 
   return (
-    <DataTable
-      loading={isLoadingCategory || isRefetchingCategory}
-      columns={columns}
-      data={categoryData?.list}
-      totalPages={categoryData?.totalPages}
-      currentPage={Number(currentPage)}
-      onChangePage={handleChangePage}
-      valueLimit={currentLimit || "4"}
-      onChangeLimit={handleChangeLimit}
-      valueInput={currentSearch || ""}
-      onChangeSearch={handleChangeSearch}
-      buttonTopContent={
-        <div className="flex flex-col gap-1 md:flex-row">
-          <Button size="sm">Create Category</Button>
-        </div>
-      }
-    />
+    <>
+      <DataTable
+        loading={isLoadingCategory || isRefetchingCategory}
+        columns={columns}
+        data={categoryData?.list}
+        totalPages={categoryData?.totalPages}
+        currentPage={Number(currentPage)}
+        onChangePage={handleChangePage}
+        valueLimit={currentLimit || "4"}
+        onChangeLimit={handleChangeLimit}
+        valueInput={currentSearch || ""}
+        onChangeSearch={handleChangeSearch}
+        buttonTopContent={
+          <div className="flex flex-col gap-1 md:flex-row">
+            <Button size="sm" onClick={open}>
+              Create Category
+            </Button>
+          </div>
+        }
+      />
+
+      <ResponsiveDialog title="Add Category" className="md:max-w-sm">
+        <AddCategoryDialog />
+      </ResponsiveDialog>
+    </>
   );
 }

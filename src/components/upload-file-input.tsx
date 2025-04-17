@@ -16,6 +16,7 @@ import { MdClear } from "react-icons/md";
 import { cn } from "@/lib/utils";
 
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface UploadFileInputProps {
@@ -99,7 +100,7 @@ export default function UploadFileInput({
           className
         )}
       >
-        <input
+        <Input
           type="file"
           className="hidden"
           disabled={Boolean(uploadedFile)}
