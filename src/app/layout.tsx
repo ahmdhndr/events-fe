@@ -34,7 +34,7 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
           </div>
         </QueryProviders>
-        <Toaster />
+        <Toaster richColors closeButton />
       </body>
     </html>
   );
