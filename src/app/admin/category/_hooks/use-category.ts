@@ -16,9 +16,21 @@ const useCategory = () => {
   const searchParams = useSearchParams();
   const debounce = useDebounce();
 
-  const currentPage = searchParams.get("page") || String(PAGE_DEFAULT);
-  const currentLimit = searchParams.get("limit") || String(LIMIT_DEFAULT);
-  const currentSearch = searchParams.get("search") || "";
+  const [currentPage, setCurrentPage] = useState(
+    searchParams.get("page") || String(PAGE_DEFAULT)
+  );
+  const [currentLimit, setCurrentLimit] = useState(
+    searchParams.get("limit") || String(LIMIT_DEFAULT)
+  );
+  const [currentSearch, setCurrentSearch] = useState(
+    searchParams.get("search") || ""
+  );
+
+  useEffect(() => {
+    setCurrentPage(searchParams.get("page") || String(PAGE_DEFAULT));
+    setCurrentLimit(searchParams.get("limit") || String(LIMIT_DEFAULT));
+    setCurrentSearch(searchParams.get("search") || "");
+  }, [searchParams]);
 
   const [searchInput, setSearchInput] = useState(currentSearch);
 
@@ -67,28 +79,16 @@ const useCategory = () => {
 
   const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
-  };
 
-  // Debounce untuk update search params
-  useEffect(() => {
     debounce(() => {
       const query = buildParams({
         page: String(PAGE_DEFAULT),
         limit: currentLimit,
-        search: searchInput,
+        search: e.target.value,
       });
-
       router.replace(`${pathname}?${query}`);
     }, 500);
-  }, [
-    buildParams,
-    searchInput,
-    currentLimit,
-    debounce,
-    pathname,
-    router,
-    searchParams,
-  ]);
+  };
 
   // Fetch categories
   const getCategories = async () => {

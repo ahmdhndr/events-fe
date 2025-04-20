@@ -18,7 +18,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useModal } from "@/context/modal-context";
+import { blurDataURL } from "@/utils/blur-data-url";
 
 import useCategory from "../_hooks/use-category";
 import AddCategoryDialog from "./add-category-dialog";
@@ -56,14 +58,27 @@ export default function CategoryTable() {
       header: "Icon",
       cell: ({ row }) => {
         const category = row.original;
+        let url = "";
+        if (category.icon.startsWith("https")) {
+          url = category.icon;
+        } else {
+          url = "/images/icons/placeholder.png";
+        }
 
         return (
-          <Image
-            src={"/images/icons/placeholder.png"}
-            alt={category.name}
-            width={50}
-            height={50}
-          />
+          <div className="relative h-10 w-10">
+            <Image
+              fill
+              src={url}
+              alt={category.name}
+              // width={50}
+              // height={50}
+              className="object-contain"
+              sizes="40px"
+              placeholder="blur"
+              blurDataURL={blurDataURL}
+            />
+          </div>
         );
       },
     },
@@ -141,8 +156,13 @@ export default function CategoryTable() {
         }
       />
 
-      <ResponsiveDialog title="Add Category" className="md:max-w-sm">
-        <AddCategoryDialog />
+      <ResponsiveDialog
+        title="Add Category"
+        className="max-h-[575px] overflow-y-auto md:max-w-sm"
+      >
+        <ScrollArea>
+          <AddCategoryDialog />
+        </ScrollArea>
       </ResponsiveDialog>
     </>
   );

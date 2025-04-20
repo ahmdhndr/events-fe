@@ -13,7 +13,7 @@ import { env } from "./env/server";
 export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 60, // 1 jam
   },
   secret: env.NEXTAUTH_SECRET,
   providers: [

@@ -34,7 +34,15 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
           </div>
         </QueryProviders>
-        <Toaster richColors closeButton />
+        <Toaster
+          richColors
+          closeButton
+          toastOptions={{
+            classNames: {
+              closeButton: "text-right",
+            },
+          }}
+        />
       </body>
     </html>
   );
