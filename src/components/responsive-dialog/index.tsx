@@ -55,7 +55,9 @@ export function ResponsiveDialog({
               </>
             )}
           </DrawerHeader>
-          <div className="px-4 pb-4">{children}</div>
+          <div className="max-h-[580px] overflow-y-auto px-4 pb-4">
+            {children}
+          </div>
           {/* <DrawerFooter className="pt-2">
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
